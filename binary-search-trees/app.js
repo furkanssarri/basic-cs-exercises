@@ -12,11 +12,9 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 		prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
 	}
 };
-const unSortedArr = [12, 6, 3, 1, 8, 233, 47];
+const unSortedArr = [12, 6, 3, 1, 8, 6, 96, 47, 10, 75, 72, 32, 31, 44, 43, 18];
 const numbersArr = [1, 2, 3, 4, 5, 6, 7]
 const newTree = new Tree(unSortedArr);
 
-
-// console.log(newTree.buildTree())
 
 prettyPrint(newTree.root)

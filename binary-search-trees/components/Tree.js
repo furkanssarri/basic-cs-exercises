@@ -3,8 +3,8 @@ import { Node } from "./Node.js";
 export class Tree {
 	constructor(array) {
 		this.array = array;
-      Tree.mergeSort(this.array, 0, this.array.length - 1);
-		this.root = this.buildTree(0, array.length -1);
+      this.root = null;
+      this.checkDuplicates(this.array);
 	}
 
    static mergeSort(arr, left, right) {
@@ -13,12 +13,9 @@ export class Tree {
       }
    
       const mid = Math.floor((right + left ) / 2);
-   
       
       Tree.mergeSort(arr, left, mid);
-      
       Tree.mergeSort(arr, mid + 1, right);
-      
       Tree.merge(arr, left, mid, right);
    }
 
@@ -28,16 +25,34 @@ export class Tree {
       const rightArr = arr.slice(mid + 1, right + 1);
    
       let i = 0, j = 0, k = left;
-   
+      
+      // Comparisons
       while (i < leftArr.length && j < rightArr.length) {
          arr[k++] = (leftArr[i] < rightArr[j]) ? leftArr[i++] : rightArr[j++];
       }
-   
       while (i < leftArr.length) arr[k++] = leftArr[i++];
       while (j < rightArr.length) arr[k++] = rightArr[j++];
    }
 
+   checkDuplicates(arr) {
+      const newSet = new Set(arr);
+      if (newSet.size === arr.length) { 
+         Tree.mergeSort(this.array, 0, this.array.length - 1);
+         this.root = this.buildTree(0, this.array.length -1);
+         return true;
+      }
+      this.removeDuplicates(newSet);
+      return false;
+   }
+
+   removeDuplicates (set) {
+      this.array = Array.from(set);
+      Tree.mergeSort(this.array, 0, this.array.length - 1);
+      this.root = this.buildTree(0, this.array.length -1);
+   }
+
    buildTree(start, end) {
+      
       if (start > end) return null;
    
       let mid = start + Math.floor((end - start) / 2);
@@ -47,5 +62,9 @@ export class Tree {
       root.right = this.buildTree(mid + 1, end);
    
       return root;
+   }
+
+   insert(value) {
+
    }
 }
