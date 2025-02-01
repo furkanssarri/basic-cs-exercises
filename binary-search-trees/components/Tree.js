@@ -64,7 +64,14 @@ export class Tree {
       return root;
    }
 
-   insert(value) {
-
+   // Traversal methods
+   inorder (root) {
+      if (root) {
+         this.inorder(root.left);
+         console.log(root.data);
+         this.inorder(root.right);
+      }
    }
+
+   // Preorder, Postorder and Level order: Soon™
 }

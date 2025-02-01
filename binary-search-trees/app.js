@@ -18,3 +18,4 @@ const newTree = new Tree(unSortedArr);
 
 
 prettyPrint(newTree.root)
+// newTree.inorder(newTree.root);
