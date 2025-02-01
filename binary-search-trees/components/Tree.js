@@ -86,4 +86,27 @@ export class Tree {
       this.postorder(node.right);
       console.log(node.data);
    }
+
+   insert (value, node = this.root) {
+      if (node === null) {
+         console.log(`No current root. Creating new Node with the value ${value}...`);
+         return new Node(value);
+      }
+
+      // Check for duplicates
+      if (node.data === value) {
+         console.log(`Duplication detected, skipping insertion...`);
+         return node;
+      }
+
+      if (value < node.data) {
+         console.log(`The value ${value} goes into left subtree.`)
+         node.left = this.insert(value, node.left);
+      } else if (value > node.data) {
+         console.log(`The value ${value} goes into right subtree.`)
+         node.right = this.insert(value, node.right);
+      }
+      
+      return node;
+   }
 }
