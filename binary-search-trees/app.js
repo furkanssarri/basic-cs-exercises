@@ -17,5 +17,6 @@ const numbersArr = [1, 2, 3, 4, 5, 6, 7]
 const newTree = new Tree(unSortedArr);
 
 
+
+
 prettyPrint(newTree.root)
-// newTree.inorder(newTree.root);

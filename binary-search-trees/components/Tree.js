@@ -73,5 +73,17 @@ export class Tree {
       }
    }
 
-   // Preorder, Postorder and Level order: Soon™
+   preorder (node) {
+      if (node === null) return;
+      console.log(node.data);
+      this.preorder(node.left);
+      this.preorder(node.right);
+   }
+
+   postorder (node) {
+      if (node === null) return;
+      this.postorder(node.left);
+      this.postorder(node.right);
+      console.log(node.data);
+   }
 }
