@@ -3,110 +3,158 @@ import { Node } from "./Node.js";
 export class Tree {
 	constructor(array) {
 		this.array = array;
-      this.root = null;
-      this.checkDuplicates(this.array);
+		this.root = null;
+		this.checkDuplicates(this.array);
 	}
 
-   static mergeSort(arr, left, right) {
-      if (left >= right) {
-         return;
+	static mergeSort(arr, left, right) {
+		if (left >= right) {
+			return;
+		}
+
+		const mid = Math.floor((right + left) / 2);
+
+		Tree.mergeSort(arr, left, mid);
+		Tree.mergeSort(arr, mid + 1, right);
+		Tree.merge(arr, left, mid, right);
+	}
+
+	static merge(arr, left, mid, right) {
+		// Slice arrays
+		const leftArr = arr.slice(left, mid + 1);
+		const rightArr = arr.slice(mid + 1, right + 1);
+
+		let i = 0,
+			j = 0,
+			k = left;
+
+		// Comparisons
+		while (i < leftArr.length && j < rightArr.length) {
+			arr[k++] = leftArr[i] < rightArr[j] ? leftArr[i++] : rightArr[j++];
+		}
+		while (i < leftArr.length) arr[k++] = leftArr[i++];
+		while (j < rightArr.length) arr[k++] = rightArr[j++];
+	}
+
+	checkDuplicates(arr) {
+		const newSet = new Set(arr);
+		if (newSet.size === arr.length) {
+			Tree.mergeSort(this.array, 0, this.array.length - 1);
+			this.root = this.buildTree(0, this.array.length - 1);
+			return true;
+		}
+		this.removeDuplicates(newSet);
+		return false;
+	}
+
+	removeDuplicates(set) {
+		this.array = Array.from(set);
+		Tree.mergeSort(this.array, 0, this.array.length - 1);
+		this.root = this.buildTree(0, this.array.length - 1);
+	}
+
+	buildTree(start, end) {
+		if (start > end) return null;
+
+		let mid = start + Math.floor((end - start) / 2);
+		let root = new Node(this.array[mid]);
+
+		root.left = this.buildTree(start, mid - 1);
+		root.right = this.buildTree(mid + 1, end);
+
+		return root;
+	}
+
+	// Traversal methods
+	inorder(root) {
+		if (root) {
+			this.inorder(root.left);
+			console.log(root.data);
+			this.inorder(root.right);
+		}
+	}
+
+	preorder(node) {
+		if (node === null) return;
+		console.log(node.data);
+		this.preorder(node.left);
+		this.preorder(node.right);
+	}
+
+	postorder(node) {
+		if (node === null) return;
+		this.postorder(node.left);
+		this.postorder(node.right);
+		console.log(node.data);
+	}
+
+	insert(value, node = this.root) {
+		if (node === null) {
+			console.log(
+				`No current root. Creating new Node with the value ${value}...`
+			);
+			return new Node(value);
+		}
+
+		// Check for duplicates
+		if (node.data === value) {
+			console.log(`Duplication detected, skipping insertion...`);
+			return node;
+		}
+
+		if (value < node.data) {
+			console.log(`The value ${value} goes into left subtree.`);
+			node.left = this.insert(value, node.left);
+		} else if (value > node.data) {
+			console.log(`The value ${value} goes into right subtree.`);
+			node.right = this.insert(value, node.right);
+		}
+
+		return node;
+	}
+
+   getPredecessor (curr) {
+      curr = curr.left;
+      while (curr !== null && curr.right !== null) {
+         curr = curr.right;
       }
-   
-      const mid = Math.floor((right + left ) / 2);
-      
-      Tree.mergeSort(arr, left, mid);
-      Tree.mergeSort(arr, mid + 1, right);
-      Tree.merge(arr, left, mid, right);
+      return curr;
    }
 
-   static merge(arr, left, mid, right) {
-      // Slice arrays
-      const leftArr = arr.slice(left, mid + 1);
-      const rightArr = arr.slice(mid + 1, right + 1);
-   
-      let i = 0, j = 0, k = left;
-      
-      // Comparisons
-      while (i < leftArr.length && j < rightArr.length) {
-         arr[k++] = (leftArr[i] < rightArr[j]) ? leftArr[i++] : rightArr[j++];
-      }
-      while (i < leftArr.length) arr[k++] = leftArr[i++];
-      while (j < rightArr.length) arr[k++] = rightArr[j++];
-   }
+	getSuccessor(curr) {
+		if (curr.right === null) return this.getPredecessor(curr);
+		curr = curr.right;
+		while (curr !== null && curr.left !== null) {
+			curr = curr.left;
+		}
+		return curr;
+	}
 
-   checkDuplicates(arr) {
-      const newSet = new Set(arr);
-      if (newSet.size === arr.length) { 
-         Tree.mergeSort(this.array, 0, this.array.length - 1);
-         this.root = this.buildTree(0, this.array.length -1);
-         return true;
-      }
-      this.removeDuplicates(newSet);
-      return false;
-   }
+	deleteItem(value, node = this.root) {
+		if (node === null) {
+			return node;
+		}
+		if (node.data > value) {
+			node.left = this.deleteItem(value, node.left);
+		} else if (node.data < value) {
+			node.right = this.deleteItem(value, node.right);
+		} else {
+			// If node value matches with the value
+			if (node.left === null) {
+				return node.right;
+			}
+			if (node.right === null) {
+				return node.left;
+			}
+			const successorNode = this.getSuccessor(node);
+			if (successorNode !== null) {
+            console.log(`Deleting ${value}.`);
+				node.data = successorNode.data;
+				node.right = this.deleteItem(successorNode.data, node.right);
+			}
+		}
 
-   removeDuplicates (set) {
-      this.array = Array.from(set);
-      Tree.mergeSort(this.array, 0, this.array.length - 1);
-      this.root = this.buildTree(0, this.array.length -1);
-   }
+		return node;
+	}
 
-   buildTree(start, end) {
-      
-      if (start > end) return null;
-   
-      let mid = start + Math.floor((end - start) / 2);
-      let root = new Node(this.array[mid]);
-   
-      root.left = this.buildTree(start, mid - 1);
-      root.right = this.buildTree(mid + 1, end);
-   
-      return root;
-   }
-
-   // Traversal methods
-   inorder (root) {
-      if (root) {
-         this.inorder(root.left);
-         console.log(root.data);
-         this.inorder(root.right);
-      }
-   }
-
-   preorder (node) {
-      if (node === null) return;
-      console.log(node.data);
-      this.preorder(node.left);
-      this.preorder(node.right);
-   }
-
-   postorder (node) {
-      if (node === null) return;
-      this.postorder(node.left);
-      this.postorder(node.right);
-      console.log(node.data);
-   }
-
-   insert (value, node = this.root) {
-      if (node === null) {
-         console.log(`No current root. Creating new Node with the value ${value}...`);
-         return new Node(value);
-      }
-
-      // Check for duplicates
-      if (node.data === value) {
-         console.log(`Duplication detected, skipping insertion...`);
-         return node;
-      }
-
-      if (value < node.data) {
-         console.log(`The value ${value} goes into left subtree.`)
-         node.left = this.insert(value, node.left);
-      } else if (value > node.data) {
-         console.log(`The value ${value} goes into right subtree.`)
-         node.right = this.insert(value, node.right);
-      }
-      
-      return node;
-   }
 }
