@@ -17,6 +17,8 @@ const numbersArr = [1, 2, 3, 4, 5, 6, 7]
 const newTree = new Tree(unSortedArr);
 
 
-newTree.deleteItem(31)
+
 
 prettyPrint(newTree.root)
+
+console.log(newTree.find(47));
