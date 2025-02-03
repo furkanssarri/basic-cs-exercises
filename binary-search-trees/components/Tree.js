@@ -65,39 +65,43 @@ export class Tree {
 		return root;
 	}
 
-	// Traversal methods
-	inorder(node) {
-		if (node) {
-			this.inorder(node.left);
-			console.log(node.data);
-			this.inorder(node.right);
-		}
+	// Inorder Traversal (Left -> Root -> Right)
+	inorder(node = this.root, arr = []) {
+		if (!node) return arr;
+		this.inorder(node.left, arr);
+		arr.push(node.data);
+		this.inorder(node.right, arr);
+		return arr;
 	}
 
-	preorder(node) {
-		if (node === null) return;
-		console.log(node.data);
-		this.preorder(node.left);
-		this.preorder(node.right);
+	// Preorder Traversal (Root -> Left -> Right)
+	preorder(node = this.root, arr = []) {
+		if (!node) return arr;
+		arr.push(node.data);
+		this.preorder(node.left, arr);
+		this.preorder(node.right, arr);
+		return arr;
 	}
 
-	postorder(node) {
-		if (node === null) return;
-		this.postorder(node.left);
-		this.postorder(node.right);
-		console.log(node.data);
+	// Postorder Traversal (Left -> Right -> Root)
+	postorder(node = this.root, arr = []) {
+		if (!node) return arr;
+		this.postorder(node.left, arr);
+		this.postorder(node.right, arr);
+		arr.push(node.data);
+		return arr;
 	}
 
 	insert(value, node = this.root) {
 		if (node === null) {
-			console.log(
-				`No current root. Creating new Node with the value ${value}...`
-			);
+			console.log(`No current root. Creating new Node with the value ${value}...`);
+         this.array.push(value);
+         Tree.mergeSort(this.array, 0, this.array.length - 1);
 			return new Node(value);
 		}
 
 		// Check for duplicates
-		if (node.data === value) {
+		if (value === node.data) {
 			console.log(`Duplication detected, skipping insertion...`);
 			return node;
 		}
@@ -193,10 +197,15 @@ export class Tree {
 		return result;
 	}
 
-   getSubtreeHeight(node) {
-      if (node === null) return -1;
-      return Math.max(this.getSubtreeHeight(node.left), this.getSubtreeHeight(node.right)) + 1;
-   }
+	getSubtreeHeight(node) {
+		if (node === null) return -1;
+		return (
+			Math.max(
+				this.getSubtreeHeight(node.left),
+				this.getSubtreeHeight(node.right)
+			) + 1
+		);
+	}
 
 	height(value, node = this.root) {
 		if (node === null) return -1;
@@ -225,16 +234,27 @@ export class Tree {
 		return dist;
 	}
 
-   isBalanced (node = this.root) {
-      if (node === null) return true;
+	isBalanced(node = this.root) {
+		if (node === null) return true;
 
-      let leftHeight = this.getSubtreeHeight(node.left);
-      let rightHeight = this.getSubtreeHeight(node.right);
+		let leftHeight = this.getSubtreeHeight(node.left);
+		let rightHeight = this.getSubtreeHeight(node.right);
 
-      if (Math.abs(leftHeight - rightHeight) > 1) {
-         return false;
-      }
+		if (Math.abs(leftHeight - rightHeight) > 1) {
+			return false;
+		}
 
-      return this.isBalanced(node.left) && this.isBalanced(node.right);
-   }
+		return this.isBalanced(node.left) && this.isBalanced(node.right);
+	}
+
+	rebalance() {
+		if (this.isBalanced()) {
+			console.log("The tree is balanced. Not proceeding...");
+			return;
+		}
+		console.log("The tree is unbalanced. Proceeding with rebalancing...");
+		this.array = this.inorder();
+      Tree.mergeSort(this.array, 0, this.array.length - 1);
+		this.root = this.buildTree(0, this.array.length - 1);
+	}
 }
