@@ -66,11 +66,11 @@ export class Tree {
 	}
 
 	// Traversal methods
-	inorder(root) {
-		if (root) {
-			this.inorder(root.left);
-			console.log(root.data);
-			this.inorder(root.right);
+	inorder(node) {
+		if (node) {
+			this.inorder(node.left);
+			console.log(node.data);
+			this.inorder(node.right);
 		}
 	}
 
@@ -113,13 +113,13 @@ export class Tree {
 		return node;
 	}
 
-   getPredecessor (curr) {
-      curr = curr.left;
-      while (curr !== null && curr.right !== null) {
-         curr = curr.right;
-      }
-      return curr;
-   }
+	getPredecessor(curr) {
+		curr = curr.left;
+		while (curr !== null && curr.right !== null) {
+			curr = curr.right;
+		}
+		return curr;
+	}
 
 	getSuccessor(curr) {
 		if (curr.right === null) return this.getPredecessor(curr);
@@ -148,7 +148,7 @@ export class Tree {
 			}
 			const successorNode = this.getSuccessor(node);
 			if (successorNode !== null) {
-            console.log(`Deleting ${value}.`);
+				console.log(`Deleting ${value}.`);
 				node.data = successorNode.data;
 				node.right = this.deleteItem(successorNode.data, node.right);
 			}
@@ -157,39 +157,71 @@ export class Tree {
 		return node;
 	}
 
-   find (value, node = this.root) {
-      if (node === null) {
-         return null;
-      }
-      if (value === node.data) {
-         return node;
-      }
-      if (value < node.data) {
-         return this.find(value, node.left);
-      } else if (value > node.data) {
-         return this.find(value, node.right);
-      }
-      return null;
+	find(value, node = this.root) {
+		if (node === null) {
+			return null;
+		}
+		if (value === node.data) {
+			return node;
+		}
+		if (value < node.data) {
+			return this.find(value, node.left);
+		} else if (value > node.data) {
+			return this.find(value, node.right);
+		}
+		return null;
+	}
+
+	getLevelOrderData(root, level, result) {
+		if (root === null) return;
+
+		if (result.length <= level) {
+			result.push([]);
+		}
+
+		// Append the current node.data to the current level
+		result[level].push(root.data);
+
+		// Recur children
+		this.getLevelOrderData(root.left, level + 1, result);
+		this.getLevelOrderData(root.right, level + 1, result);
+	}
+
+	levelOrder(root) {
+		const result = [];
+		this.getLevelOrderData(root, 0, result);
+		return result;
+	}
+
+   getSubtreeHeight(node) {
+      if (node === null) return -1;
+      return Math.max(this.getSubtreeHeight(node.left), this.getSubtreeHeight(node.right)) + 1;
    }
 
-   getLevelOrderData (root, level, result) {
-      if (root === null) return;
+	height(value, node = this.root) {
+		if (node === null) return -1;
 
-      if (result.length <= level) {
-         result.push([]);
-      }
+		if (node.data === value) {
+			return this.getSubtreeHeight(node);
+		}
 
-      // Append the current node.data to the current level
-      result[level].push(root.data);
+		let leftHeight = this.height(value, node.left);
+		let rightHeight = this.height(value, node.right);
 
-      // Recur children
-      this.getLevelOrderData(root.left, level + 1, result);
-      this.getLevelOrderData(root.right, level + 1, result);
-   }
+		return Math.max(leftHeight, rightHeight);
+	}
 
-   levelOrder (root) {
-      const result = [];
-      this.getLevelOrderData(root, 0, result);
-      return result;
-   }
+	depth(value, node = this.root) {
+		if (node === null) return -1;
+
+		let dist = -1;
+		if (
+			node.data === value ||
+			(dist = this.depth(value, node.left)) >= 0 ||
+			(dist = this.depth(value, node.right)) >= 0
+		) {
+			return dist + 1;
+		}
+		return dist;
+	}
 }

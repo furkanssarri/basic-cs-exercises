@@ -22,9 +22,13 @@ const levelOrder = [ // A referrence for the level order search result with the 
 	[3, 12, 43, 75],
 	[1, 6, 10, 18, 32, 44, 72, 96],
 ];
-
+newTree.insert(2);
+newTree.insert(11);
+newTree.insert(98);
 prettyPrint(newTree.root);
+console.log(newTree.height(44));
 
-console.log(newTree.levelOrder(newTree.root));
 
-// console.log(newTree.find(47));
+// console.log(newTree.levelOrder(newTree.root));
+
+
