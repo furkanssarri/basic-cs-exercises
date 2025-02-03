@@ -171,4 +171,25 @@ export class Tree {
       }
       return null;
    }
+
+   getLevelOrderData (root, level, result) {
+      if (root === null) return;
+
+      if (result.length <= level) {
+         result.push([]);
+      }
+
+      // Append the current node.data to the current level
+      result[level].push(root.data);
+
+      // Recur children
+      this.getLevelOrderData(root.left, level + 1, result);
+      this.getLevelOrderData(root.right, level + 1, result);
+   }
+
+   levelOrder (root) {
+      const result = [];
+      this.getLevelOrderData(root, 0, result);
+      return result;
+   }
 }
