@@ -7,10 +7,6 @@ newList.append("cat");
 newList.append("lion");
 newList.append("bison");
 
-
 // console.log(newList.pop());
 newList.insertAt("elephant", 2);
 console.log(newList.toString());
-
-
-
