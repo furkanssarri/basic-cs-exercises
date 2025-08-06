@@ -9,6 +9,7 @@ This implementation provides a complete singly linked list with a comprehensive 
 ## Features
 
 ### Core Functionality
+
 - **Dynamic Size**: Grows and shrinks dynamically as elements are added/removed
 - **Memory Efficient**: Only allocates memory as needed for each node
 - **Flexible Insertion**: Add elements at the beginning, end, or any position
@@ -20,6 +21,7 @@ This implementation provides a complete singly linked list with a comprehensive 
 #### LinkedList Class Methods
 
 **Basic Operations:**
+
 - `append(value)` - Add element to the end of the list
 - `prepend(value)` - Add element to the beginning of the list
 - `insertAt(value, index)` - Insert element at specific index
@@ -27,45 +29,51 @@ This implementation provides a complete singly linked list with a comprehensive 
 - `removeAt(index)` - Remove element at specific index (not yet implemented)
 
 **Access Methods:**
+
 - `getSize()` - Get the number of elements in the list
 - `getHead()` - Get the first node
 - `getTail()` - Get the last node
 - `atIndex(index)` - Get node at specific index
 
 **Search Methods:**
+
 - `contains(value)` - Check if value exists in the list (returns boolean)
 - `find(value)` - Find the index of a specific value
 
 **Utility Methods:**
+
 - `toString()` - Convert list to string representation
 
 #### Node Class
+
 Simple node structure for storing data and next reference.
 
 ```javascript
 export class Node {
-    constructor(value) {
-        this.value = value;
-        this.next = null;
-    }
+  constructor(value) {
+    this.value = value;
+    this.next = null;
+  }
 }
 ```
 
 ## Technical Details
 
 ### Internal Structure
+
 The LinkedList maintains a single reference to the head node (`_head`). All operations traverse from the head when needed, maintaining simplicity while providing full functionality.
 
 ```javascript
 export class LinkedList {
-    constructor() {
-        this._head = null;
-    }
-    // ... methods
+  constructor() {
+    this._head = null;
+  }
+  // ... methods
 }
 ```
 
 ### Memory Management
+
 - **Space Complexity**: O(n) where n is the number of elements
 - **No Pre-allocation**: Memory is allocated only when nodes are added
 - **Automatic Cleanup**: Removed nodes are automatically garbage collected
@@ -73,6 +81,7 @@ export class LinkedList {
 ## Method Implementations
 
 ### Append Operation
+
 ```javascript
 append(value) {
     const newNode = new Node(value);
@@ -89,6 +98,7 @@ append(value) {
 ```
 
 ### Prepend Operation
+
 ```javascript
 prepend(value) {
     const newNode = new Node(value);
@@ -98,6 +108,7 @@ prepend(value) {
 ```
 
 ### Insert At Index
+
 ```javascript
 insertAt(value, index) {
     if (index < 0 || index > this.getSize()) return null;
@@ -128,7 +139,7 @@ list.prepend("snake");
 list.append("lion");
 
 console.log(list.toString()); // "(snake) -> (dog) -> (cat) -> (lion) -> null"
-console.log(list.getSize());  // 4
+console.log(list.getSize()); // 4
 ```
 
 ### Insertion and Access
@@ -166,21 +177,22 @@ console.log(list.toString()); // Updated list without "lion"
 
 ## Time Complexity
 
-| Operation | Time Complexity | Description |
-|-----------|----------------|-------------|
-| append    | O(n)           | Must traverse to end |
-| prepend   | O(1)           | Direct head insertion |
-| insertAt  | O(n)           | May need to traverse to index |
-| pop       | O(n)           | Must traverse to second-to-last |
-| getSize   | O(n)           | Must count all nodes |
-| getHead   | O(1)           | Direct access to head |
-| getTail   | O(n)           | Must traverse to end |
-| atIndex   | O(n)           | Must traverse to index |
-| contains  | O(n)           | May need to check all nodes |
-| find      | O(n)           | May need to check all nodes |
-| toString  | O(n)           | Must visit all nodes |
+| Operation | Time Complexity | Description                     |
+| --------- | --------------- | ------------------------------- |
+| append    | O(n)            | Must traverse to end            |
+| prepend   | O(1)            | Direct head insertion           |
+| insertAt  | O(n)            | May need to traverse to index   |
+| pop       | O(n)            | Must traverse to second-to-last |
+| getSize   | O(n)            | Must count all nodes            |
+| getHead   | O(1)            | Direct access to head           |
+| getTail   | O(n)            | Must traverse to end            |
+| atIndex   | O(n)            | Must traverse to index          |
+| contains  | O(n)            | May need to check all nodes     |
+| find      | O(n)            | May need to check all nodes     |
+| toString  | O(n)            | Must visit all nodes            |
 
 ## Space Complexity
+
 - **List Storage**: O(n) where n is the number of elements
 - **Method Operations**: O(1) additional space for most operations
 - **toString Method**: O(n) for building the result string
@@ -192,7 +204,9 @@ node linked-lists/index.js
 ```
 
 This will:
+
 1. Create a new linked list
+
 2. Add several animal names using different methods
 3. Insert an element at a specific position
 4. Display the final list structure
@@ -201,34 +215,42 @@ This will:
 
 The `toString()` method creates a visual representation of the list:
 
-```
+```txt
 (snake) -> (dog) -> (elephant) -> (cat) -> (lion) -> null
 ```
 
 This format clearly shows:
+
 - Each node's value in parentheses
+
 - Arrows indicating the direction of links
 - "null" at the end indicating the list termination
 
 ## Implementation Highlights
 
 ### Boundary Handling
+
 The implementation carefully handles edge cases:
+
 - **Empty List**: All methods properly handle when `_head` is null
 - **Single Element**: Operations work correctly with only one node
 - **Index Bounds**: `insertAt` and `atIndex` validate index ranges
 
 ### Traversal Pattern
+
 Most operations use a common traversal pattern:
+
 ```javascript
 let current = this._head;
 while (current && someCondition) {
-    current = current.next;
+  current = current.next;
 }
 ```
 
 ### Memory Efficiency
+
 The implementation uses:
+
 - Only one pointer per node (next reference)
 - No doubly-linked overhead
 - Minimal bookkeeping (only head reference stored)
@@ -247,11 +269,13 @@ This implementation demonstrates:
 ## Potential Improvements
 
 ### Performance Optimizations
+
 - **Size Caching**: Store size as instance variable for O(1) `getSize()`
 - **Tail Reference**: Maintain tail pointer for O(1) `append()` and `getTail()`
 - **Doubly Linked**: Add previous pointers for efficient backward traversal
 
 ### Additional Methods
+
 - `removeAt(index)` - Remove element at specific index
 - `reverse()` - Reverse the entire list
 - `clear()` - Remove all elements
@@ -259,6 +283,7 @@ This implementation demonstrates:
 - `fromArray(arr)` - Create list from array
 
 ### Iterator Support
+
 ```javascript
 // Potential iterator implementation
 *[Symbol.iterator]() {
@@ -272,20 +297,20 @@ This implementation demonstrates:
 
 ## Comparison with Arrays
 
-| Feature | Linked List | Array |
-|---------|-------------|-------|
-| Access by index | O(n) | O(1) |
-| Insert at beginning | O(1) | O(n) |
-| Insert at end | O(n)* | O(1) |
-| Memory usage | Higher | Lower |
-| Cache locality | Poor | Good |
-| Dynamic size | Yes | Limited |
+| Feature             | Linked List | Array   |
+| ------------------- | ----------- | ------- |
+| Access by index     | O(n)        | O(1)    |
+| Insert at beginning | O(1)        | O(n)    |
+| Insert at end       | O(n)\*      | O(1)    |
+| Memory usage        | Higher      | Lower   |
+| Cache locality      | Poor        | Good    |
+| Dynamic size        | Yes         | Limited |
 
-*O(1) with tail reference optimization
+\*O(1) with tail reference optimization
 
 ## File Structure
 
-```
+```txt
 linked-lists/
 ├── README.md              # This documentation
 ├── index.js              # Usage examples and demonstrations
@@ -298,7 +323,7 @@ linked-lists/
 
 When running the example (`node linked-lists/index.js`), you'll see:
 
-```
+```txt
 (snake) -> (dog) -> (elephant) -> (cat) -> (lion) -> (bison) -> null
 ```
 

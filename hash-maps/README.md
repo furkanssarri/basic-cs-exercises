@@ -9,6 +9,7 @@ This implementation provides a fully functional hash map (hash table) with autom
 ## Features
 
 ### Core Functionality
+
 - **Dynamic Buckets**: Automatically creates and manages bucket arrays
 - **Hash Function**: Uses prime number-based hashing for even distribution
 - **Collision Handling**: Implements separate chaining using arrays
@@ -18,10 +19,12 @@ This implementation provides a fully functional hash map (hash table) with autom
 ### Methods Implemented
 
 #### Static Methods
+
 - `createBuckets(amount)` - Creates an array of empty buckets
 - `hash(key, capacity)` - Generates hash code using prime number algorithm
 
 #### Instance Methods
+
 - `set(key, value)` - Insert or update key-value pair
 - `get(key)` - Retrieve value by key
 - `has(key)` - Check if key exists
@@ -39,6 +42,7 @@ This implementation provides a fully functional hash map (hash table) with autom
 ## Technical Details
 
 ### Hash Function
+
 The implementation uses a prime number-based hash function for optimal distribution:
 
 ```javascript
@@ -53,47 +57,51 @@ static hash(key, capacity) {
 ```
 
 ### Load Factor Management
+
 - **Initial Capacity**: 16 buckets
 - **Load Factor Threshold**: 0.75 (75%)
 - **Resize Strategy**: Double the capacity when threshold is exceeded
 - **Rehashing**: All existing entries are rehashed after resizing
 
 ### Collision Resolution
+
 Uses separate chaining where each bucket is an array that can hold multiple entries with the same hash value.
 
 ## Usage Examples
 
 ### Basic Operations
+
 ```javascript
 import { HashMap } from "./components/HashMap.js";
 
 const hashMap = new HashMap();
 
 // Set key-value pairs
-hashMap.set('apple', 'red');
-hashMap.set('banana', 'yellow');
-hashMap.set('grape', 'purple');
+hashMap.set("apple", "red");
+hashMap.set("banana", "yellow");
+hashMap.set("grape", "purple");
 
 // Get values
-console.log(hashMap.get('apple')); // 'red'
+console.log(hashMap.get("apple")); // 'red'
 
 // Check existence
-console.log(hashMap.has('banana')); // true
+console.log(hashMap.has("banana")); // true
 
 // Get all keys
 console.log(hashMap.keys()); // ['apple', 'banana', 'grape']
 
 // Remove entry
-hashMap.remove('banana');
+hashMap.remove("banana");
 console.log(hashMap.length()); // 2
 ```
 
 ### Advanced Usage
+
 ```javascript
 // The implementation handles automatic resizing
 // Add many items to trigger resize at 75% capacity
 for (let i = 0; i < 20; i++) {
-    hashMap.set(`key${i}`, `value${i}`);
+  hashMap.set(`key${i}`, `value${i}`);
 }
 
 // Get all entries as key-value objects
@@ -108,18 +116,19 @@ console.log(hashMap.length()); // 0
 ## Time Complexity
 
 | Operation | Average Case | Worst Case |
-|-----------|-------------|------------|
-| Set       | O(1)        | O(n)       |
-| Get       | O(1)        | O(n)       |
-| Has       | O(1)        | O(n)       |
-| Remove    | O(1)        | O(n)       |
-| Keys      | O(n)        | O(n)       |
-| Values    | O(n)        | O(n)       |
-| Entries   | O(n)        | O(n)       |
+| --------- | ------------ | ---------- |
+| Set       | O(1)         | O(n)       |
+| Get       | O(1)         | O(n)       |
+| Has       | O(1)         | O(n)       |
+| Remove    | O(1)         | O(n)       |
+| Keys      | O(n)         | O(n)       |
+| Values    | O(n)         | O(n)       |
+| Entries   | O(n)         | O(n)       |
 
-*Note: Worst case O(n) occurs when all keys hash to the same bucket*
+_Note: Worst case O(n) occurs when all keys hash to the same bucket_
 
 ## Space Complexity
+
 - **Overall**: O(n) where n is the number of key-value pairs
 - **Bucket Array**: O(capacity) where capacity starts at 16 and doubles as needed
 
@@ -130,18 +139,21 @@ node hash-maps/app.js
 ```
 
 This will run the demonstration script that:
+
 1. Creates a new HashMap instance
-2. Adds multiple key-value pairs (including some in Turkish)
+2. Adds multiple key-value pairs
 3. Demonstrates automatic resizing when load factor exceeds 0.75
 4. Displays the final bucket structure
 
 ## Implementation Notes
 
 ### Known Issues
+
 - The `remove()` method has a bug in the splice operation and needs rework
 - The implementation could benefit from more comprehensive error handling
 
 ### Potential Improvements
+
 - Add iterator support for for...of loops
 - Implement hash function alternatives
 - Add serialization/deserialization methods
@@ -150,7 +162,7 @@ This will run the demonstration script that:
 
 ## File Structure
 
-```
+```txt
 hash-maps/
 ├── README.md           # This documentation
 ├── app.js             # Usage examples and demonstrations

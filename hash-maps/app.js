@@ -1,31 +1,26 @@
 import { HashMap } from "./components/HashMap.js";
 
+const configMap = new HashMap();
+configMap.set("database.host", "127.0.0.1");
+configMap.set("database.port", "5432");
+configMap.set("database.user", "admin");
+configMap.set("database.password", "securePass123");
+configMap.set("cache.enabled", "true");
+configMap.set("cache.ttl", "3600");
+configMap.set("logging.level", "debug");
+configMap.set("api.endpoint", "https://api.example.com/v1");
+configMap.set("api.timeout", "5000");
+configMap.set("ui.theme", "dark");
+configMap.set("ui.fontSize", "14px");
+configMap.set("security.encryption", "AES-256");
+configMap.set("security.ssl", "true");
+configMap.set("analytics.enabled", "false");
+configMap.set("analytics.id", "UA-12345678");
+configMap.set("storage.type", "s3");
+configMap.set("storage.bucket", "company-app-data");
+configMap.set("notifications.email", "support@example.com");
+configMap.set("notifications.sms", "+1234567890");
+configMap.set("feature.flags.newDashboard", "beta");
+configMap.set("feature.flags.export", "enabled");
 
-const newHashMap = new HashMap();
-newHashMap.set('apple', 'red')
-newHashMap.set('banana', 'yellow')
-newHashMap.set('carrot', 'orange')
-newHashMap.set('dog', 'brown')
-newHashMap.set('elephant', 'gray')
-newHashMap.set('frog', 'green')
-newHashMap.set('grape', 'purple')
-newHashMap.set('hat', 'black')
-newHashMap.set('ice cream', 'white')
-newHashMap.set('jacket', 'blue')
-newHashMap.set('kite', 'pink')
-newHashMap.set('lion', 'golden')
-newHashMap.set('scimitar', 'black')
-newHashMap.set('katana', 'demir')
-newHashMap.set('silah', 'siyah demir')
-newHashMap.set('araba', 'çeşitli')
-newHashMap.set('mac', 'alüminyum')
-newHashMap.set('kürdan', 'ahşap')
-newHashMap.set('kürdan kollar', 'et')
-newHashMap.set('sagopa kajmer', 'insan')
-newHashMap.set('ceza', 'şarkıcı')
-newHashMap.set('metal', 'müzik')
-newHashMap.set('lastik', 'kauçuk')
-newHashMap.set('pcb', 'elektronik devre')
-newHashMap.set('klavye', 'plastik')
-
-console.log(newHashMap.buckets);
+console.log(configMap.buckets);
