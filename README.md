@@ -4,7 +4,7 @@ A comprehensive collection of fundamental computer science exercises and impleme
 
 ## Project Structure
 
-```
+```txt
 basic-cs-exercises/
 ├── README.md                    # Main project documentation
 ├── hash-maps/                   # HashMap implementation
@@ -38,27 +38,33 @@ basic-cs-exercises/
 ## Data Structures Implemented
 
 ### 1. Hash Maps
+
 A custom hash map implementation with collision handling, dynamic resizing, and load factor management.
 
-**Features:**
+#### Hash Map Features
+
 - Hash function using prime numbers
 - Dynamic resizing at 75% load factor
 - Complete CRUD operations
 - Key/value/entry iteration methods
 
 ### 2. Linked Lists
+
 A singly linked list implementation with comprehensive manipulation methods.
 
-**Features:**
+#### Linked ListFeatures
+
 - Append/prepend operations
 - Insert/remove at specific indices
 - Search and traversal methods
 - String representation
 
 ### 3. Binary Search Trees
+
 A self-balancing binary search tree with various traversal methods.
 
-**Features:**
+#### BST Features
+
 - Balanced tree construction
 - Insert/delete operations
 - Multiple traversal methods (inorder, preorder, postorder, level-order)
@@ -66,15 +72,18 @@ A self-balancing binary search tree with various traversal methods.
 - Automatic rebalancing
 
 ### 4. Recursive Algorithms
+
 Implementations of classic recursive algorithms.
 
-**Includes:**
+#### Recursion Includes
+
 - Fibonacci sequence calculation
 - Merge sort algorithm
 
 ## Getting Started
 
 ### Prerequisites
+
 - Node.js (version 14 or higher for ES6 module support)
 - OR a modern web browser with ES6 module support
 
@@ -114,6 +123,7 @@ This repository is designed to help understand:
 ## Implementation Details
 
 All implementations prioritize:
+
 - **Clarity**: Code is well-commented and easy to understand
 - **Efficiency**: Algorithms follow standard time complexity expectations
 - **Modularity**: Components are separated and reusable
@@ -124,13 +134,14 @@ All implementations prioritize:
 Each subdirectory contains detailed documentation about the specific implementation:
 
 - [Hash Maps Documentation](./hash-maps/README.md)
-- [Recursion Documentation](./recursion/README.md) 
+- [Recursion Documentation](./recursion/README.md)
 - [Binary Search Trees Documentation](./binary-search-trees/README.md)
 - [Linked Lists Documentation](./linked-lists/README.md)
 
 ## Contributing
 
 This is a learning repository. Feel free to:
+
 - Add more data structures
 - Implement additional algorithms
 - Improve existing implementations
@@ -139,4 +150,4 @@ This is a learning repository. Feel free to:
 
 ## License
 
-This project is for educational purposes. Feel free to use and modify as needed for learning.
+This project is for educational purposes and is licensed under MIT License. Feel free to use and modify as needed for learning.
