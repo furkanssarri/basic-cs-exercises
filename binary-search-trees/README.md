@@ -9,6 +9,7 @@ This implementation provides a fully functional Binary Search Tree with automati
 ## Features
 
 ### Core Functionality
+
 - **Balanced Tree Construction**: Automatically builds balanced BST from sorted arrays
 - **Duplicate Handling**: Automatically removes duplicates during construction
 - **Dynamic Operations**: Insert, delete, and search operations
@@ -21,10 +22,12 @@ This implementation provides a fully functional Binary Search Tree with automati
 #### Tree Class Methods
 
 **Static Methods:**
+
 - `mergeSort(arr, left, right)` - In-place merge sort implementation
 - `merge(arr, left, mid, right)` - Merge helper for merge sort
 
 **Instance Methods:**
+
 - `constructor(array)` - Creates BST from array, removes duplicates, sorts, and builds balanced tree
 - `checkDuplicates(arr)` - Checks and removes duplicate values
 - `removeDuplicates(set)` - Converts set back to sorted array and builds tree
@@ -41,15 +44,16 @@ This implementation provides a fully functional Binary Search Tree with automati
 - `rebalance()` - Rebalances the entire tree
 
 #### Node Class
+
 Simple node structure with `data`, `left`, and `right` properties.
 
 ```javascript
 export class Node {
-    constructor(data) {
-        this.data = data;
-        this.left = null;
-        this.right = null;
-    }
+  constructor(data) {
+    this.data = data;
+    this.left = null;
+    this.right = null;
+  }
 }
 ```
 
@@ -64,13 +68,13 @@ export class Node {
 ```javascript
 buildTree(start, end) {
     if (start > end) return null;
-    
+
     let mid = start + Math.floor((end - start) / 2);
     let root = new Node(this.array[mid]);
-    
+
     root.left = this.buildTree(start, mid - 1);
     root.right = this.buildTree(mid + 1, end);
-    
+
     return root;
 }
 ```
@@ -78,18 +82,22 @@ buildTree(start, end) {
 ### Traversal Methods
 
 **Inorder Traversal** (Left → Root → Right):
+
 - Results in sorted order for BST
 - Used for tree validation and sorted output
 
 **Preorder Traversal** (Root → Left → Right):
+
 - Useful for tree serialization
 - Creates tree structure representation
 
 **Postorder Traversal** (Left → Right → Root):
+
 - Useful for tree deletion
 - Children processed before parent
 
 **Level-order Traversal** (Breadth-first):
+
 - Processes nodes level by level
 - Returns 2D array with each level as separate array
 
@@ -116,8 +124,8 @@ console.log(foundNode ? "Found" : "Not found");
 tree.deleteItem(96);
 
 // Get different traversals
-console.log("Inorder:", tree.inorder());     // Sorted order
-console.log("Preorder:", tree.preorder());   // Root first
+console.log("Inorder:", tree.inorder()); // Sorted order
+console.log("Preorder:", tree.preorder()); // Root first
 console.log("Postorder:", tree.postorder()); // Root last
 console.log("Level-order:", tree.levelOrder(tree.root)); // By levels
 ```
@@ -127,15 +135,15 @@ console.log("Level-order:", tree.levelOrder(tree.root)); // By levels
 ```javascript
 // Pretty print function (from app.js)
 const prettyPrint = (node, prefix = "", isLeft = true) => {
-    if (node === null) return;
-    
-    if (node.right !== null) {
-        prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
-    }
-    console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
-    if (node.left !== null) {
-        prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
-    }
+  if (node === null) return;
+
+  if (node.right !== null) {
+    prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+  }
+  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+  if (node.left !== null) {
+    prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+  }
 };
 
 prettyPrint(tree.root);
@@ -158,16 +166,17 @@ tree.rebalance();
 ## Time Complexity
 
 | Operation | Average Case | Worst Case | Best Case |
-|-----------|-------------|------------|----------|
-| Search    | O(log n)    | O(n)       | O(1)     |
-| Insert    | O(log n)    | O(n)       | O(1)     |
-| Delete    | O(log n)    | O(n)       | O(1)     |
-| Traversal | O(n)        | O(n)       | O(n)     |
-| Rebalance | O(n)        | O(n)       | O(n)     |
+| --------- | ------------ | ---------- | --------- |
+| Search    | O(log n)     | O(n)       | O(1)      |
+| Insert    | O(log n)     | O(n)       | O(1)      |
+| Delete    | O(log n)     | O(n)       | O(1)      |
+| Traversal | O(n)         | O(n)       | O(n)      |
+| Rebalance | O(n)         | O(n)       | O(n)      |
 
-*Note: Worst case O(n) occurs when tree becomes skewed (like a linked list)*
+_Note: Worst case O(n) occurs when tree becomes skewed (like a linked list)_
 
 ## Space Complexity
+
 - **Tree Storage**: O(n) for storing n nodes
 - **Recursion Stack**: O(log n) for balanced tree, O(n) for skewed tree
 - **Traversal Arrays**: O(n) for storing traversal results
@@ -179,6 +188,7 @@ node binary-search-trees/app.js
 ```
 
 This will:
+
 1. Create a BST from an unsorted array
 2. Perform multiple insertions with rebalancing
 3. Display the final tree structure using pretty print
@@ -187,6 +197,7 @@ This will:
 ## Implementation Highlights
 
 ### Automatic Duplicate Removal
+
 ```javascript
 checkDuplicates(arr) {
     const newSet = new Set(arr);
@@ -202,13 +213,17 @@ checkDuplicates(arr) {
 ```
 
 ### Balanced Tree Construction
+
 The tree is built using the middle element as root to ensure balance:
+
 - Left subtree contains elements smaller than root
 - Right subtree contains elements larger than root
 - Recursively applied to all subtrees
 
 ### Deletion with Successor/Predecessor
+
 The implementation handles three deletion cases:
+
 1. **Leaf Node**: Simply remove the node
 2. **One Child**: Replace node with its child
 3. **Two Children**: Replace with inorder successor and delete successor
@@ -235,7 +250,7 @@ This implementation demonstrates:
 
 ## File Structure
 
-```
+```txt
 binary-search-trees/
 ├── README.md              # This documentation
 ├── app.js                # Usage examples and tree visualization
@@ -248,27 +263,67 @@ binary-search-trees/
 
 When running the example, you'll see a tree structure like:
 
+```txt
+The value 100 goes into right subtree.
+The value 100 goes into right subtree.
+The value 100 goes into right subtree.
+The value 100 goes into right subtree.
+No current root. Creating new Node with the value 100...
+The tree is balanced. Not proceeding...
+The value 101 goes into right subtree.
+The value 101 goes into right subtree.
+The value 101 goes into right subtree.
+The value 101 goes into right subtree.
+The value 101 goes into right subtree.
+No current root. Creating new Node with the value 101...
+The tree is unbalanced. Proceeding with rebalancing...
+The value 30 goes into left subtree.
+The value 30 goes into right subtree.
+The value 30 goes into right subtree.
+The value 30 goes into right subtree.
+The value 30 goes into left subtree.
+No current root. Creating new Node with the value 30...
+The tree is unbalanced. Proceeding with rebalancing...
+The value 102 goes into right subtree.
+The value 102 goes into right subtree.
+The value 102 goes into right subtree.
+The value 102 goes into right subtree.
+The value 102 goes into right subtree.
+No current root. Creating new Node with the value 102...
+The tree is unbalanced. Proceeding with rebalancing...
+The value 103 goes into right subtree.
+The value 103 goes into right subtree.
+The value 103 goes into right subtree.
+The value 103 goes into right subtree.
+The value 103 goes into right subtree.
+No current root. Creating new Node with the value 103...
+The tree is unbalanced. Proceeding with rebalancing...
+The value 105 goes into right subtree.
+The value 105 goes into right subtree.
+The value 105 goes into right subtree.
+The value 105 goes into right subtree.
+The value 105 goes into right subtree.
+No current root. Creating new Node with the value 105...
+The tree is unbalanced. Proceeding with rebalancing...
+│               ┌── 105
+│           ┌── 103
+│       ┌── 102
+│       │   │   ┌── 101
+│       │   └── 100
+│   ┌── 96
+│   │   │       ┌── 75
+│   │   │   ┌── 72
+│   │   └── 47
+│   │       └── 44
+└── 43
+    │           ┌── 32
+    │       ┌── 31
+    │   ┌── 30
+    │   │   │   ┌── 18
+    │   │   └── 12
+    └── 10
+        │       ┌── 8
+        │   ┌── 6
+        └── 3
+            └── 1
 ```
-┌── 103
-│   └── 102
-│       └── 101
-│           └── 100
-└── 75
-    ├── 96
-    └── 44
-        ├── 72
-        │   └── 47
-        │       └── 43
-        └── 32
-            ├── 31
-            │   └── 30
-            └── 18
-                ├── 12
-                │   └── 10
-                │       └── 8
-                │           └── 6
-                │               └── 3
-                │                   └── 1
-                └── (empty)
-```
-
